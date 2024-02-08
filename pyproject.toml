@@ -1,0 +1,23 @@
+[project]
+name = "async-github"
+description = "Asynchronous github client"
+version = "v1.0.0"
+requires-python = ">=3.11"
+authors = [
+  {name = "Nuno Antunes", email = "afonso.antunes@live.com.pt"},
+]
+maintainers = [
+  {name = "Nuno Antunes", email = "afonso.antunes@live.com.pt"},
+]
+dependencies = [
+  "aiohttp"
+]
+readme = "README.md"
+license = {file = "LICENSE"}
+keywords = ["github", "async", "client"]
+classifiers = [
+  "Programming Language :: Python"
+]
+
+[project.optional-dependencies]
+dev = ["python-dotenv"]
