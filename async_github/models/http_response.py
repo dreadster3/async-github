@@ -8,4 +8,9 @@ class HttpResponse:
         self.body: Any = body
 
     def is_ok(self):
+        """Check if the response is successful
+
+        Returns:
+            bool: True if the response is successful, False otherwise
+        """
         return 200 <= self.status_code < 300
