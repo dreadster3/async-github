@@ -1,1 +1,4 @@
 from async_github.clients.async_http_client import AsyncHttpClient
+from async_github.clients.base_github_client import BaseGithubClient
+from async_github.clients.repository_client import RepositoryClient
+from async_github.clients.user_client import UserClient
