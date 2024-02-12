@@ -5,6 +5,7 @@ from async_github.clients import RepositoryClient
 from async_github.helpers import Err, Ok
 from async_github.models import Repository, User
 from async_github.clients.base_github_client import BaseGithubClient
+from async_github.models.page_params import PageParams
 
 
 class UserClient(BaseGithubClient):
@@ -46,22 +47,23 @@ class UserClient(BaseGithubClient):
                     return None
                 raise err
 
-    async def get_user_repositories_async(self) -> List[Repository]:
+    async def get_user_repositories_async(self, params: PageParams = PageParams()) -> List[Repository]:
         """Get the repositories of a user
 
         Returns:
             List[Repository]: List of repositories
         """
 
-        if repositories := self._cache[[self.username, "repository"]]:
+        if repositories := self._cache[[self.username, "repository", params.page, params.page_size]]:
             return repositories
 
-        result = await self._get_async(f"/users/{self.username}/repos")
+        result = await self._get_async(f"/users/{self.username}/repos", params=params.get_params())
 
         response = result.unwrap()
 
         repositories = list(
             map(lambda repo: Repository(**repo), response.body))
-        self._cache[[self.username, "repository"]] = repositories
+        self._cache[[self.username, "repository",
+                     params.page, params.page_size]] = repositories
 
         return repositories

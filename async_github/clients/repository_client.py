@@ -1,5 +1,6 @@
 from typing import List, Optional
 from aiohttp import ClientSession
+from cachetools import cachedmethod
 
 from async_github.clients.base_github_client import BaseGithubClient
 from async_github.helpers.result import Err, Ok
@@ -13,7 +14,7 @@ class RepositoryClient(BaseGithubClient):
         self.repository_name = repository_name
         super().__init__(token, session)
 
-    async def get_repository_async(self, params: PageParams = PageParams()) -> Optional[Repository]:
+    async def get_repository_async(self) -> Optional[Repository]:
         """Get a repository by owner and repository name
 
         Args:
@@ -28,12 +29,12 @@ class RepositoryClient(BaseGithubClient):
             return repository
 
         # Check if the repository is in the cache as a child
-        if children := self._cache[[self.owner, "repository"]]:
+        if children := self._cache.get_children([self.owner, "repository"]):
             for child in children:
                 if child.name == self.repository_name:
                     return child
 
-        result = await self._get_async(f"/repos/{self.owner}/{self.repository_name}", params=params.get_params())
+        result = await self._get_async(f"/repos/{self.owner}/{self.repository_name}")
 
         match result:
             case Ok(response):
