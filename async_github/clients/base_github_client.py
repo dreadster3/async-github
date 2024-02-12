@@ -1,10 +1,10 @@
 from os import environ
 from typing import Optional
 from aiohttp import ClientSession
-
 from cachetools import LRUCache
+
 from async_github.cache import CompositeKeyCache
-from async_github.clients.async_http_client import AsyncHttpClient
+from async_github.clients import AsyncHttpClient
 
 
 class BaseGithubClient(AsyncHttpClient):

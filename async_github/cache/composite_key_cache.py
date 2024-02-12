@@ -1,5 +1,5 @@
-from typing import Any, List, Optional, Union
 import cachetools
+from typing import Any, List, Optional, Union
 
 
 class CompositeKeyCache:

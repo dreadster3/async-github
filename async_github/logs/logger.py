@@ -1,6 +1,5 @@
-from collections.abc import Mapping
 import logging
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 
 class ContextLogger:

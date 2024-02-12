@@ -1,9 +1,9 @@
 import asyncio
-import logging
 from aiohttp import ClientResponseError, ClientSession, ClientTimeout
 from uuid import uuid4, UUID
-from typing import Any, Dict, Optional
+from typing import Dict, Optional
 from enum import Enum
+
 from async_github.helpers import Result, Err, Ok
 from async_github.logs import ContextLogger
 from async_github.models import HttpResponse

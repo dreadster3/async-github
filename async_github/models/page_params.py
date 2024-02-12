@@ -1,4 +1,3 @@
-from typing import Dict
 from async_github.models.params import Params
 
 
