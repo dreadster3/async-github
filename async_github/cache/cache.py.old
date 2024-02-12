@@ -65,9 +65,9 @@ class CacheEntry:
 class Cache:
     KeyType = Union[str, List[str]]
 
-    def __init__(self):
+    def __init__(self, max_size: int = 100):
         self._root = CacheEntry("root", None)
-        self._max_size = 100
+        self._max_size = max_size
         self._logger = logging.getLogger(self.__class__.__name__)
 
     def _remove_oldest_child(self, root: CacheEntry) -> None:
@@ -114,11 +114,28 @@ class Cache:
 
         return self._get_cache_entry(next(c for c in root.children if c.key == current), key[1:])
 
+    def get_cache_entry_children(self, key: KeyType) -> List[CacheEntry]:
+        if isinstance(key, str):
+            key = [key]
+
+        entry = self._get_cache_entry(self._root, key)
+        if entry:
+            return entry.children
+
+        raise KeyError(f"Cache entry {key} not found")
+
     def get_cache_value(self, key: KeyType) -> Any:
         if isinstance(key, str):
             key = [key]
 
-        return self._get_cache_entry(self._root, key).value
+        entry = self._get_cache_entry(self._root, key)
+
+        if entry:
+            self._logger.debug(
+                f"Retrieved cache entry {key} with value {entry.value}")
+            return entry.value
+
+        raise KeyError(f"Cache entry {key} not found")
 
     @ property
     def size(self) -> int:

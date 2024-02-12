@@ -42,9 +42,9 @@ class AsyncHttpClient:
     async def __aenter__(self):
         return self
 
-    def __del__(self):
-        if self._session and asyncio.get_running_loop():
-            asyncio.create_task(self.close())
+    # def __del__(self):
+    #     if self._session and asyncio.get_running_loop():
+    #         asyncio.create_task(self.close())
 
     def is_closed(self) -> bool:
         """Check if the session is closed
