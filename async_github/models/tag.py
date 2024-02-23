@@ -1,5 +1,6 @@
 from dataclasses import dataclass
-from async_github.models import Commit
+
+from async_github.models.commit import Commit
 from async_github.models.model import Model
 
 
@@ -11,6 +12,6 @@ class Tag(Model):
     tarball_url: str
     node_id: str
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if isinstance(self.commit, dict):
             self.commit = Commit(**self.commit)

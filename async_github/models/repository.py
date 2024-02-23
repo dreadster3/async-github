@@ -1,8 +1,9 @@
 from dataclasses import dataclass
 from enum import Enum
 from typing import List
-from async_github.models.owner import Owner
+
 from async_github.models.model import Model
+from async_github.models.owner import Owner
 
 
 class RepositoryVisibility(Enum):
@@ -10,7 +11,7 @@ class RepositoryVisibility(Enum):
     PRIVATE = "private"
     INTERNAL = "internal"
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.value
 
 
@@ -42,7 +43,7 @@ class Repository(Model):
     disabled: bool
     visibility: RepositoryVisibility
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         # Convert to model
         self.visibility = RepositoryVisibility(self.visibility)
         if isinstance(self.owner, dict):

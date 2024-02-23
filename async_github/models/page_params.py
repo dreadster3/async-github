@@ -6,7 +6,7 @@ class PageParams(Params):
         self.page = page
         self.page_size = page_size
 
-    def get_params(self):
+    def get_params(self) -> dict[str, str]:
         return {
             "page": str(self.page),
             "per_page": str(self.page_size),

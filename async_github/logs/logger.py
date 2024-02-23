@@ -7,19 +7,19 @@ class ContextLogger:
         self.__context = context
         self.__logger = logging.getLogger(name)
 
-    def set_context(self, context: Dict[str, Any]):
+    def set_context(self, context: Dict[str, Any]) -> None:
         self.__context = context
 
     def get_context(self) -> Dict[str, Any]:
         return self.__context
 
-    def clear_context(self):
+    def clear_context(self) -> None:
         self.__context.clear()
 
-    def add_context(self, context: Dict[str, Any]):
+    def add_context(self, context: Dict[str, Any]) -> None:
         self.__context.update(context)
 
-    def remove_context(self, *keys: str):
+    def remove_context(self, *keys: str) -> None:
         for key in keys:
             self.__context.pop(key, None)
 
@@ -33,7 +33,14 @@ class ContextLogger:
         stack_info: bool = False,
         stacklevel: int = 1,
     ) -> None:
-        self._log(level, msg, args, exc_info, extra, stack_info, stacklevel)
+        self._log(
+            level,
+            msg,
+            args,
+            exc_info,
+            extra,
+            stack_info,
+            stacklevel)
 
     def _log(
         self,
@@ -49,8 +56,14 @@ class ContextLogger:
             extra = {}
 
         extra.update(self.__context)
-        self.__logger._log(level=level, msg=msg, args=args, extra=extra,
-                           exc_info=exc_info, stack_info=stack_info, stacklevel=stacklevel)
+        self.__logger._log(
+            level=level,
+            msg=msg,
+            args=args,
+            extra=extra,
+            exc_info=exc_info,
+            stack_info=stack_info,
+            stacklevel=stacklevel)
 
     def debug(self, msg: object, *args: object) -> None:
         self.log(logging.DEBUG, msg, *args)

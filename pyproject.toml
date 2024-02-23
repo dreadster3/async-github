@@ -3,22 +3,30 @@ name = "async-github"
 description = "Asynchronous github client"
 version = "v1.0.0"
 requires-python = ">=3.11"
-authors = [
-  {name = "Nuno Antunes", email = "afonso.antunes@live.com.pt"},
-]
-maintainers = [
-  {name = "Nuno Antunes", email = "afonso.antunes@live.com.pt"},
-]
-dependencies = [
-  "aiohttp >= 3.9.3, < 4.0.0"
-]
+authors = [{ name = "Nuno Antunes", email = "afonso.antunes@live.com.pt" }]
+maintainers = [{ name = "Nuno Antunes", email = "afonso.antunes@live.com.pt" }]
+dependencies = ["aiohttp >= 3.9.3, < 4.0.0", "python-query >= 0.0.1b3, < 1.0.0"]
 readme = "README.md"
-license = {file = "LICENSE"}
+license = { file = "LICENSE" }
 keywords = ["github", "async", "client"]
-classifiers = [
-  "Programming Language :: Python"
-]
+classifiers = ["Programming Language :: Python"]
 
 [project.optional-dependencies]
-dev = ["python-dotenv"]
+dev = ["mypy", "flake8", "autopep8", "pytest", "pytest-asyncio"]
 test = ["pytest", "pytest-asyncio", "pytest-cov", "coverage"]
+lint = ["mypy", "flake8", "build"]
+release = ["build"]
+
+[project.urls]
+"Github:Repository" = "https://github.com/dreadster3/async-github.git"
+"Github:Issues" = "https://github.com/dreadster3/async-github/issues"
+
+[tool.pytest.ini_options]
+addopts = "-v --cov=python_query --cov=tests --log-level=DEBUG"
+
+[tool.autopep8]
+max-line-length = 75
+aggressive = 5
+
+[tool.setuptools.packages.find]
+include = ["async_github"]
